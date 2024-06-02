@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TestApp</title>
+    <!-- Import Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 h-screen flex items-center justify-center">
+    <div class="container mx-auto p-8 flex flex-col items-center">
+        <div class="login bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+            <h2 class="text-3xl font-bold mb-6 text-center text-blue-500">Login</h2>
+            <label for="email" class="block text-gray-700">Email: </label>
+            <input type="email" id="email" class="block w-full p-2 border border-gray-300 rounded mt-2 mb-4">
+            <label for="password" class="block text-gray-700">Password: </label>
+            <input type="password" id="password" class="block w-full p-2 border border-gray-300 rounded mt-2 mb-4">
+            <p class="mb-4 text-center">New user? <span class="text-blue-500 cursor-pointer" onclick="showRegister()">Register</span></p>
+            <input type="submit" value="Login" id="login-btn" class="bg-blue-500 text-white p-2 rounded w-full cursor-pointer" onclick="userLogin()">
+        </div>
+        <div class="register bg-white p-8 rounded-lg shadow-lg w-full max-w-md hidden">
+            <h2 class="text-3xl font-bold mb-6 text-center text-blue-500">Register</h2>
+            <label for="name" class="block text-gray-700">Full Name:</label>
+            <input type="text" id="name" class="block w-full p-2 border border-gray-300 rounded mt-2 mb-4">
+            <label for="regemail" class="block text-gray-700">Email: </label>
+            <input type="email" id="regemail" class="block w-full p-2 border border-gray-300 rounded mt-2 mb-4">
+            <label class="block text-gray-700">Gender</label>
+            <div class="flex items-center mt-2 mb-4">
+                <input type="radio" name="gen" id="male" value="male" class="mr-2"><label for="male" class="mr-4">Male</label>
+                <input type="radio" name="gen" id="female" value="female" class="mr-2"><label for="female" class="mr-4">Female</label>
+                <input type="radio" name="gen" id="others" value="others" class="mr-2"><label for="others">Others</label>
+            </div>
+            <label for="regpassword" class="block text-gray-700">Password</label>
+            <input type="password" id="regpassword" class="block w-full p-2 border border-gray-300 rounded mt-2 mb-4">
+            <p class="mb-4 text-center">Already have an account? <span class="text-blue-500 cursor-pointer" onclick="showLogin()">Login</span></p>
+            <input type="submit" value="Register" id="register-btn" class="bg-blue-500 text-white p-2 rounded w-full cursor-pointer" onclick="userRegister()">
+        </div>
+        <div class="welcomepage bg-white p-8 rounded-lg shadow-lg w-full max-w-md hidden">
+            <h2 class="text-3xl font-bold mb-6 text-center text-green-500">Welcome</h2>
+            <div id="userdetails" class="text-center">
+                <p id="userName" class="text-gray-700 text-lg mb-2"></p>
+                <p id="userEmail" class="text-gray-700 text-lg mb-2"></p>
+                <p id="userGender" class="text-gray-700 text-lg mb-2"></p>
+                <button class="bg-red-500 text-white p-2 rounded mt-4" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
