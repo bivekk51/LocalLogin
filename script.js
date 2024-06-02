@@ -48,7 +48,8 @@ function userRegister(){
             gender:gender
         };
         localStorage.setItem(regemail,JSON.stringify(user))
-        console.log(user);
+        alert("You are succesfully registered")
+        showWelcomePage(user)
     }
 }
 
