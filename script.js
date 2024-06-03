@@ -1,6 +1,5 @@
 
 document.addEventListener('DOMContentLoaded', (event) => {
-    // Initially hide register and welcome page
     document.querySelector('.register').style.display = 'none';
     document.querySelector('.welcomepage').style.display = 'none';
     const loggedInUserEmail = localStorage.getItem('loggedInUser');
@@ -31,7 +30,6 @@ function showWelcomePage(user) {
     document.querySelector('.register').style.display = 'none';
     document.querySelector('.welcomepage').style.display = 'block';
 
-    // Display user details on the welcome page
     document.getElementById('userName').textContent = `Name: ${user.name}`;
     document.getElementById('userEmail').textContent = `Email: ${user.email}`;
     document.getElementById('userGender').textContent = `Gender: ${user.gender}`;
