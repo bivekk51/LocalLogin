@@ -3,6 +3,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
     // Initially hide register and welcome page
     document.querySelector('.register').style.display = 'none';
     document.querySelector('.welcomepage').style.display = 'none';
+    const loggedInUserEmail = localStorage.getItem('loggedInUser');
+    if (loggedInUserEmail) {
+        const storedUser = localStorage.getItem(loggedInUserEmail);
+        if (storedUser) {
+            const user = JSON.parse(storedUser);
+            showWelcomePage(user);
+        }
+    } else {
+        showLogin();
+    }
 });
 
 function showLogin() {
@@ -27,7 +37,7 @@ function showWelcomePage(user) {
     document.getElementById('userGender').textContent = `Gender: ${user.gender}`;
 }
 
-function userRegister(){
+async function userRegister(){
     const name=document.getElementById('name').value
     const regemail=document.getElementById('regemail').value
     const regpassword=document.getElementById('regpassword').value
@@ -41,11 +51,12 @@ function userRegister(){
     else if(!gender)
         alert("Please select a gender")
     else{
-        const user={
-            name:name,
-            email:regemail,
-            password:regpassword,
-            gender:gender
+        const hashedPassword = await hashPassword(regpassword);
+        const user = {
+            name: name,
+            email: regemail,
+            password: hashedPassword,
+            gender: gender
         };
         localStorage.setItem(regemail,JSON.stringify(user))
         alert("You are succesfully registered")
@@ -75,14 +86,19 @@ function validatePassword(regpassword){
         return true
 }
 
-function userLogin(){
+async function userLogin(){
     const email=document.getElementById('email').value
     const password=document.getElementById('password').value
     const userInfo=JSON.parse(localStorage.getItem(email))
     if(userInfo){
-        if(userInfo.password==password){
+         const hashedPassword = await hashPassword(password);
+        if(userInfo.password==hashedPassword){
             alert("login succesful")
+            localStorage.setItem('loggedInUser', email);
             showWelcomePage(userInfo);
+        }
+        else{
+            alert("Wrong password")
         }
     }
     else
@@ -90,6 +106,14 @@ function userLogin(){
 }
 
 function logout(){
+    localStorage.removeItem('loggedInUser');
     showLogin()
-    alert("You have been logged out")
+}
+async function hashPassword(password) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(password);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    return hashHex;
 }
